@@ -1,0 +1,15 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "rsschool task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rsshcool",
+    "virtual-keyboard"
+  ],
+  "author": "Alex Leoniuk <alex.brest.by@gmail.com>",
+  "license": "ISC"
+}
