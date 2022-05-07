@@ -8,9 +8,12 @@ const devServer = (isDev) =>
     ? {}
     : {
         devServer: {
-          open: true,
+          // open: true,
           port: 8080,
           hot: false,
+          client: {
+            logging: 'none',
+          },
         },
       };
 
