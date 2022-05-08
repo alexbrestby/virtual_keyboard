@@ -16,6 +16,7 @@ export default (function layout() {
 
   const textarea = document.createElement('textarea');
   textarea.classList.add('textarea');
+  textarea.autofocus = true;
   container.append(textarea);
 
   const keyboard = document.createElement('div');

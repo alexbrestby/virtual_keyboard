@@ -6,6 +6,10 @@ export default (function functionality() {
   const capsLock = document.querySelector('.CapsLock');
   const textArea = document.querySelector('textarea');
 
+  document.addEventListener('load', () => {
+    textArea.focus();
+  });
+
   function getLetters() {
     const alphabetButtonsId = [];
     Object.keys(buttons.mainButtons).forEach((elem) => { if (elem.match(/Key/)) { alphabetButtonsId.push(elem); } });
@@ -58,10 +62,15 @@ export default (function functionality() {
         extendedSymbolsHandler('on');
       }
     }
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      textArea.value += '    ';
+      textArea.focus();
+    }
   });
 
   document.addEventListener('keyup', (event) => {
-    console.log(event.key);
+    // console.log(event.key);
     function removeClass() {
       return document.querySelector(`.${event.code}`).classList.remove('active');
     }
@@ -73,11 +82,19 @@ export default (function functionality() {
       document.querySelector(`.${event.code}`).classList.remove('active');
       specialButtonHandler();
       extendedSymbolsHandler('off');
-      console.log(event.key);
+      // console.log(event.key);
     }
   });
 
   keyboard.addEventListener('mousedown', (event) => {
+    // console.log(event.target.classList[1]);
+    if (event.target.classList[1] !== 'CapsLock' && event.target.classList[1] !== undefined) {
+      document.querySelector(`.${event.target.classList[1]}`).classList.add('active');
+    } else if (event.target.classList[1] === 'CapsLock') {
+      document.querySelector(`.${event.target.classList[1]}`).classList.toggle('active');
+      specialButtonHandler();
+    }
+
     if (event.target.classList[1] === 'ShiftLeft' || event.target.classList[1] === 'ShiftRight') {
       document.querySelector(`.${event.target.classList[1]}`).classList.add('active');
       specialButtonHandler();
@@ -86,7 +103,13 @@ export default (function functionality() {
   });
 
   keyboard.addEventListener('mouseup', (event) => {
-    console.log(event.target.classList[1]);
+    function removeClass() {
+      return document.querySelector(`.${event.target.classList[1]}`).classList.remove('active');
+    }
+    if (event.target.classList[1] !== 'CapsLock' && event.target.classList[1] !== undefined) {
+      setTimeout(removeClass, 350);
+    }
+
     if (event.target.classList[1] === 'ShiftLeft' || event.target.classList[1] === 'ShiftRight') {
       document.querySelector(`.${event.target.classList[1]}`).classList.remove('active');
       specialButtonHandler();
@@ -95,13 +118,20 @@ export default (function functionality() {
   });
 
   keyboard.addEventListener('click', (event) => {
-    // console.log(event.target.classList[1]);
-    if (event.target.classList[1] === 'Enter') {
-      textArea.value += '\r\n';
+    if (event.target.classList[1] !== undefined) {
+      if (event.target.classList[1] === 'Enter') {
+        textArea.value += '\r\n';
+      }
+      if (event.target.classList[1] === 'Backspace') {
+        textArea.value = textArea.value.split('').slice(0, -1).join('');
+      }
+      if (event.target.classList[1] === 'Tab') {
+        event.preventDefault();
+        textArea.value += '    ';
+        textArea.focus();
+      }
     }
-    if (event.target.innerHTML === 'Backspace') {
-      textArea.value = textArea.value.split('').slice(0, -1).join('');
-    }
+
     if (!Object.values(buttons.specialButtons).includes(event.target.classList[1])
     && event.target.classList[1] !== undefined) {
       textareaUpdate(event.target.innerHTML);
