@@ -22,8 +22,6 @@ export default (function layout() {
   keyboard.classList.add('keyboard');
 
   const mainButtonsArrayLength = Array.from(Object.entries(buttons.mainButtons)).length;
-  console.log(buttons.mainButtons);
-  console.log(mainButtonsArrayLength);
 
   for (let i = 0; i < mainButtonsArrayLength; i++) {
     const keyButton = document.createElement('div');
