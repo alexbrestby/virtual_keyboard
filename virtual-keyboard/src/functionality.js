@@ -43,7 +43,9 @@ export default (function functionality() {
   }
 
   document.addEventListener('keydown', (event) => {
-    document.querySelector(`.${event.code}`).classList.add('active');
+    if (event.key !== 'CapsLock') {
+      document.querySelector(`.${event.code}`).classList.add('active');
+    }
 
     if (event.key === 'CapsLock') {
       capsLock.classList.toggle('active');
@@ -59,10 +61,13 @@ export default (function functionality() {
   });
 
   document.addEventListener('keyup', (event) => {
+    console.log(event.key);
     function removeClass() {
       return document.querySelector(`.${event.code}`).classList.remove('active');
     }
-    setTimeout(removeClass, 300);
+    if (event.key !== 'CapsLock') {
+      setTimeout(removeClass, 350);
+    }
 
     if (event.key === 'Shift') {
       document.querySelector(`.${event.code}`).classList.remove('active');
