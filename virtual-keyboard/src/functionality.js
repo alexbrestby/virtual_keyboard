@@ -1,6 +1,7 @@
 import buttons from './buttons';
 
 export default (function functionality() {
+  let lang = localStorage.getItem('lang');
   const keyboard = document.querySelector('.keyboard');
   const allButtons = document.querySelectorAll('.btn');
   const capsLock = document.querySelector('.CapsLock');
@@ -12,7 +13,9 @@ export default (function functionality() {
 
   function getLetters() {
     const alphabetButtonsId = [];
-    Object.keys(buttons.mainButtons).forEach((elem) => { if (elem.match(/Key/)) { alphabetButtonsId.push(elem); } });
+    Object.keys(buttons.mainButtons[lang]).forEach((elem) => {
+      if (elem.match(/Key/)) { alphabetButtonsId.push(elem); }
+    });
     return alphabetButtonsId;
   }
 
@@ -36,13 +39,13 @@ export default (function functionality() {
       if (flag === 'on') {
         allButtons[i].innerHTML = buttons.extendedSymbols[i];
       } else {
-        allButtons[i].innerHTML = Object.values(buttons.mainButtons)[i];
+        allButtons[i].innerHTML = Object.values(buttons.mainButtons[lang])[i];
       }
     }
     if (flag === 'on') {
       allButtons['27'].innerHTML = buttons.extendedSymbols['13'];
     } else {
-      allButtons['27'].innerHTML = Object.values(buttons.mainButtons)['27'];
+      allButtons['27'].innerHTML = Object.values(buttons.mainButtons[lang])['27'];
     }
   }
 
@@ -66,6 +69,19 @@ export default (function functionality() {
       event.preventDefault();
       textArea.value += '    ';
       textArea.focus();
+    }
+
+    if (event.altKey && event.shiftKey) {
+      event.preventDefault();
+      if (!event.repeat) {
+        if (lang === 'ru') {
+          lang = 'en';
+        } else {
+          lang = 'ru';
+        }
+      }
+      localStorage.setItem('lang', lang);
+      setTimeout(document.location.reload(), 300);
     }
   });
 
