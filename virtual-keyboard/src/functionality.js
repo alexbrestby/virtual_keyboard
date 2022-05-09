@@ -47,7 +47,7 @@ export default (function functionality() {
   }
 
   document.addEventListener('keydown', (event) => {
-    if (event.key !== 'CapsLock') {
+    if (event.key !== 'CapsLock' && event.key !== 'F12') {
       document.querySelector(`.${event.code}`).classList.add('active');
     }
 
@@ -74,7 +74,7 @@ export default (function functionality() {
     function removeClass() {
       return document.querySelector(`.${event.code}`).classList.remove('active');
     }
-    if (event.key !== 'CapsLock') {
+    if (event.key !== 'CapsLock' && event.key !== 'F12') {
       setTimeout(removeClass, 350);
     }
 
@@ -133,7 +133,7 @@ export default (function functionality() {
     }
 
     if (!Object.values(buttons.specialButtons).includes(event.target.classList[1])
-    && event.target.classList[1] !== undefined) {
+      && event.target.classList[1] !== undefined) {
       textareaUpdate(event.target.innerHTML);
     }
   });

@@ -4,7 +4,7 @@
   "description": "rsschool task",
   "main": ".src/index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --env development",
     "dev": "webpack serve --env development",
     "lint": "eslint src"
   },

@@ -7,30 +7,37 @@ const devServer = (isDev) =>
   !isDev
     ? {}
     : {
-        devServer: {
-          // open: true,
-          port: 8080,
-          hot: false,
-          client: {
-            logging: 'none',
-          },
+      devServer: {
+        // open: true,
+        port: 8080,
+        hot: false,
+        client: {
+          logging: 'none',
         },
-      };
+      },
+    };
 
 const esLintPlugin = (isDev) =>
   isDev ? [] : [new ESLintPlugin({ extensions: ["js"] })];
 
 module.exports = ({ development }) => ({
   mode: development ? "development" : "production",
-  devtool: development ? "inline-source-map" : false,
+  // devtool: development ? "inline-source-map" : false,
+  devtool: development ? "source-map" : 'source-map',
+
   entry: {
     app: "./src/index.js",
   },
   output: {
-    filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist"),
+    // filename: "[name].[contenthash].js",
+    // path: path.resolve(__dirname, "dist"),
+    filename: "index.js",
+    path: path.resolve(__dirname),
     assetModuleFilename: "assets/[hash][ext]",
-    clean: true,
+    // clean: true,
+  },
+  optimization: {
+    minimize: false
   },
   module: {
     rules: [
@@ -60,7 +67,8 @@ module.exports = ({ development }) => ({
   },
   plugins: [
     ...esLintPlugin(development),
-    new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
+    // new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
+    new MiniCssExtractPlugin({ filename: "style.css" }),
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
   ],
   resolve: {
