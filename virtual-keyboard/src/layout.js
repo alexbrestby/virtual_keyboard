@@ -1,6 +1,11 @@
 import buttons from './buttons';
 
 export default (function layout() {
+  if (localStorage.getItem('lang') === null) {
+    localStorage.setItem('lang', 'ru');
+  }
+
+  const lang = localStorage.getItem('lang');
   const APP = document.querySelector('#app');
 
   const wrapper = document.createElement('div');
@@ -22,14 +27,14 @@ export default (function layout() {
   const keyboard = document.createElement('div');
   keyboard.classList.add('keyboard');
 
-  const mainButtonsArrayLength = Array.from(Object.entries(buttons.mainButtons)).length;
+  const mainButtonsArrayLength = Array.from(Object.entries(buttons.mainButtons[lang])).length;
 
   for (let i = 0; i < mainButtonsArrayLength; i++) {
     const keyButton = document.createElement('div');
     keyButton.classList.add('btn');
-    keyButton.classList.add(`${Object.keys(buttons.mainButtons)[i]}`);
-    if (buttons.specialButtons.includes(Object.keys(buttons.mainButtons)[i])) keyButton.classList.add('special');
-    keyButton.innerHTML = Object.values(buttons.mainButtons)[i];
+    keyButton.classList.add(`${Object.keys(buttons.mainButtons[lang])[i]}`);
+    if (buttons.specialButtons.includes(Object.keys(buttons.mainButtons[lang])[i])) keyButton.classList.add('special');
+    keyButton.innerHTML = Object.values(buttons.mainButtons[lang])[i];
     keyboard.append(keyButton);
   }
 
